@@ -21,17 +21,34 @@ params.minArea = 1
 params.maxArea = 100000
 
 
+params.filterByCircularity = False;
+params.minDistBetweenBlobs = 1000
+
 detector = cv2.SimpleBlobDetector(params)
 
-
-#increase the size of each blob
 keypoints = detector.detect(im)
+
+pt1 = 0
+pt2 = 0
+size = 0
 for kp in keypoints:
-	kp.size *= 3
+	size = int(kp.size)
+	kp.size *= 2.2
+	pt1 = kp.pt
+
+scale = size
+
+pt1 = (int(pt1[0] - scale), int(pt1[1]) - scale)
+pt2 = (pt1[0] + 2*scale, pt1[1] + 2*scale)
+
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
 im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+cv2.rectangle(im, pt1, pt2, 0, thickness=2)
+cv2.imshow("rectangle", im)
+cv2.waitKey(0)
 
 # Show keypoints
 cv2.imshow("Keypoints", im_with_keypoints)
