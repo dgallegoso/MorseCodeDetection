@@ -17,7 +17,7 @@ def findBlob(im):
 	params.filterByInertia = False
 	params.filterByConvexity = False
 
-	params.minDistBetweenBlobs = 0
+	params.minDistBetweenBlobs = 5
 
 	detector = cv2.SimpleBlobDetector(params)
 
