@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-import blobDetection
+from  blobDetection import findBlob, getKeypointIm
 
 cap = cv2.VideoCapture('data/flashlight.mp4')
 
