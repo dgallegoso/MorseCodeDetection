@@ -13,8 +13,8 @@ while(True):
     # Our operations on the frame come here
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    keypoints = findBlob(gray)
-    gray = getKeypointIm(gray, keypoints)
+    keypoints = blobDetection.findBlob(gray)
+    gray = blobDetection.getKeypointIm(gray, keypoints)
 
     # Display the resulting frame
     cv2.imshow('frame',gray)
