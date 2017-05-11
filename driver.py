@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-import blobDetection
+import  blobDetection
 
 cap = cv2.VideoCapture('data/flashlight.mp4')
 
