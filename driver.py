@@ -17,6 +17,9 @@ while(True):
     blobs = motionTracking.track(blobs, keypoints)
     blobDetection.getKeypointIm(im, blobs)
 
+    # if len(blobs[0].signal)>10:
+    #     print translate.decode(blobs[0].signal*2 - 1)
+
     # Display the resulting frame
     cv2.imshow('frame',im)
     if cv2.waitKey(1) & 0xFF == ord('q'):

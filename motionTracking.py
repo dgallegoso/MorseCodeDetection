@@ -8,7 +8,7 @@ class Element(object):
     def __init__(self, coord, rad, n):
         self.coord = coord
         self.rad = rad
-        self.signal = np.append(np.zeros(n), 1)
+        self.signal = np.append(np.zeros(n), 1).astype(int)
     def similarity(self, elem):
         if np.linalg.norm(self.coord - elem.coord) / self.rad <= MAX_MOVEMENT_RATIO:
             if abs(self.rad - elem.rad) / self.rad <= MAX_SIZE_RATIO:
