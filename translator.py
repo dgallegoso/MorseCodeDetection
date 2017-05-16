@@ -21,26 +21,26 @@ for k, v in fake_dic.iteritems():
 SPACE = '0'
 DOT = '1'
 DASH = '2'
-test = [1,1,1,1,0,1,0,1,2,1,1,0,1,2,1,1,0,2,2,2]
 
-def morse_to_english(secrets):
+def morse_to_english(secrets, dic):
 	secrets = "".join([str(s) for s in secrets])
 	result = []
 	letters = secrets.split(SPACE)
-	result = [lookup("".join(l)) for l in letters]
-	print "".join(result)
+	result = [lookup("".join(l), dic) for l in letters]
+	return "".join(result)
 	
 
 
 """check if sequence is a valid morse code letter
 letter is a string of {0, 1, 2}"""
-def lookup(letter):
+def lookup(letter, dic):
+	if len(letter) == 0: return ""
 	letter = letter.replace(DOT, ".")
 	letter = letter.replace(DASH, "-")
 	if letter in dic:
 		return dic[letter]
 	else:
-		return False
+		print "Could not find {0}".format(letter)
+		return "$"
 
 
-morse_to_english(test)
