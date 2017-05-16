@@ -1,9 +1,12 @@
 import numpy as np
 import cv2
 import  blobDetection
+import motionTracking
+import translate
 
 cap = cv2.VideoCapture('data/flashlight.mp4')
 
+blobs = []
 while(True):
     # Capture frame-by-frame
     ret, im = cap.read()
@@ -11,13 +14,16 @@ while(True):
     if not ret: break
 
     keypoints = blobDetection.findBlob(im)
-    im = blobDetection.getKeypointIm(im, keypoints)
+    blobs = motionTracking.track(blobs, keypoints)
+    blobDetection.getKeypointIm(im, blobs)
 
     # Display the resulting frame
     cv2.imshow('frame',im)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# When everything done, release the capture
+print translate.decode(blobs[0].signal*2 - 1)
+print list(blobs[0].signal*2 - 1)
+
 cap.release()
 cv2.destroyAllWindows()
