@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import  blobDetection
 
-cap = cv2.VideoCapture('data/flashlight.mp4')
+cap = cv2.VideoCapture('data/sos_light.mp4')
 
 while(True):
     # Capture frame-by-frame
