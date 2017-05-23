@@ -5,45 +5,37 @@ import numpy as np;
 
 # Read image
 def findBlob(im):
-	params = cv2.SimpleBlobDetector_Params()
-	params.filterByColor = True
-	params.blobColor = 255
-	params.filterByArea = True
-	params.minArea = 0
-	params.maxArea = im.shape[0] * im.shape[1] * 10
+    # Our operations on the frame come here
+    im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+    # cv2.imshow("rectangle", im)
+    # cv2.waitKey(0)
+    im=cv2.GaussianBlur(im, (5, 5), 55)
+    im=cv2.medianBlur(im, 5)
+    # cv2.imshow("rectangle", im)
+    # cv2.waitKey(0)
 
-	params.filterByCircularity = False
+    params = cv2.SimpleBlobDetector_Params()
+    params.filterByColor = True
+    params.blobColor = 255
+    params.filterByArea = True
+    params.minArea = 0
+    params.maxArea = im.shape[0] * im.shape[1] * 10
 
-	params.filterByInertia = False
-	params.filterByConvexity = False
+    params.filterByCircularity = False
 
-	params.minDistBetweenBlobs = 5
+    params.filterByInertia = False
+    params.filterByConvexity = False
 
-	detector = cv2.SimpleBlobDetector(params)
+    params.minDistBetweenBlobs = 5
 
-	# Detect blobs.
-	keypoints = detector.detect(im)
+    detector = cv2.SimpleBlobDetector(params)
 
-	return keypoints
+    # Detect blobs.
+    keypoints = detector.detect(im)
 
-def getKeypointIm(im, keypoints):
-	# Draw detected blobs as red circles.
-	# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-	im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-	return im_with_keypoints
+    return keypoints
 
-def showKeypoints(im_with_keypoints):
-	# Show keypoints
-	cv2.imshow("Keypoints", im_with_keypoints)
-	cv2.waitKey(0)
-
-
-def main():
-	im = cv2.imread("data/milestone.jpg", cv2.IMREAD_GRAYSCALE)
-
-	keypoints = findBlob(im)
-	keypointIm = getKeypointIm(im, keypoints)
-	showKeypoints(keypointIm)
-
-if __name__ == "__main__":
-	main()
+def getKeypointIm(im, elements):
+    for elem in elements:
+        if int(elem.signal[-1]) == 1:
+            cv2.circle(im, tuple(elem.coord.astype(int)), int(elem.rad), (0,0,255))
