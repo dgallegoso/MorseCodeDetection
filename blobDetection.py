@@ -36,6 +36,6 @@ def findBlob(im):
     return keypoints
 
 def getKeypointIm(im, elements):
-    for elem in elements:
-        if int(elem.signal[-1]) == 1:
+    for i, elem in enumerate(elements):
+        if int(elem.signal[-1]) == 1 and (elem.plot or i == 0):
             cv2.circle(im, tuple(elem.coord.astype(int)), int(elem.rad), (0,0,255))

@@ -9,8 +9,28 @@ from sklearn.cluster import KMeans
 
 LAMBDA = .18
 
+def plot_signal(nums, raw, smoothed):
+    plt.subplot(211)
+    plt.plot(nums, label='original')
+    plt.plot(raw, label='raw')
+    plt.legend()
+    plt.title('Original Signal with Raw Smoothed Function')
+    plt.subplot(212)
+    plt.plot(smoothed)
+    plt.title('Smoothed Signal')
+    plt.show()
+
+# trims leading and trailing 0's and adds fixed number of 0's to front and back
+def trim(nums, n=10):
+    index = np.where(nums == 1)
+    start = np.min(index)
+    end = np.max(index)
+    return np.concatenate((-np.ones(n), nums[start:end+1], -np.ones(n)))
+
+
 # Read image
 def parse(nums):
+    nums = trim(nums)
     # Smoothing the function using total variation
     # tune LAMBDA to a value that works empirically for data
     # increasing LAMBDA smooths the signal more
@@ -24,16 +44,12 @@ def parse(nums):
     smoothed = (np.array(x.value).flatten() >= 0).astype(int) * 2 - 1
 
     # Comment out to show visualization of smoothing
-    # plt.plot(nums, label='original')
-    # plt.plot(np.array(x.value).flatten(), label='raw')
-    # plt.plot(smoothed, label='smoothed')
-    # plt.legend()
-    # plt.show()
+    # plot_signal(nums, np.array(x.value).flatten(), smoothed)
 
     # Generating dots and dashes
-    loc = np.hstack((0,np.where(nums[:-1] != nums[1:])[0])) + 1
+    loc = np.hstack((0,np.where(smoothed[:-1] != smoothed[1:])[0])) + 1
     loc[0] = 0
-    intervals = np.add.reduceat(nums, loc)
+    intervals = np.add.reduceat(smoothed, loc)
     on = intervals[intervals > 0].reshape(-1, 1)
     off = intervals[intervals < 0].reshape(-1, 1)
     clusterOn = KMeans(n_clusters=2).fit(on).cluster_centers_
@@ -47,6 +63,8 @@ def parse(nums):
     np.place(intervals, np.logical_and(intervals>0, intervals<=mean_on), 1)
     np.place(intervals, intervals>1, 2)
     return intervals
+
+
 
 def decode(nums):
     return morse_to_english(parse(nums), dic)

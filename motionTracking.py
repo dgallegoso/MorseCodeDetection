@@ -1,7 +1,8 @@
 import numpy as np
+from sklearn.cluster import KMeans
 
 MAX_MOVEMENT_RATIO = 1
-MAX_SIZE_RATIO = .2
+MAX_SIZE_RATIO = .5
 ALPHA = .2
 
 class Element(object):
@@ -9,6 +10,7 @@ class Element(object):
         self.coord = coord
         self.rad = rad
         self.signal = np.append(np.zeros(n), 1).astype(int)
+        self.plot = False
     def similarity(self, elem):
         if np.linalg.norm(self.coord - elem.coord) / self.rad <= MAX_MOVEMENT_RATIO:
             if abs(self.rad - elem.rad) / self.rad <= MAX_SIZE_RATIO:
@@ -36,5 +38,24 @@ def track(elements, keypoints):
         if len(elem.signal) == n:
             elem.signal = np.append(elem.signal, 0)
     elements = sorted(elements, key=lambda x: -np.sum(x.signal))
-    # if elements[0].signal[-1] == 1: print elements[0].rad
+    return elements
+
+# handles case where no lights permanently on
+def prune_noise(elements, minLength=30, force=False):
+    if len(elements) == 0:
+        return elements
+    n = len(elements[0].signal)
+    averages = np.empty(0, dtype=float)
+    indexes = np.empty(0, dtype=int)
+    for i in range(len(elements)):
+        elem = elements[i]
+        start = np.min(np.where(elem.signal == 1))
+        if n - start >= minLength:
+            elem.plot = True
+            indexes = np.append(indexes, i)
+            averages = np.append(averages, np.mean(elem.signal[start:]))
+    if len(averages) >= 10 or force:
+        cuttoff = np.mean(KMeans(n_clusters=2).fit(averages.reshape(-1,1)).cluster_centers_)
+        for i in np.flip(indexes[averages < cuttoff], 0):
+            del elements[i]
     return elements
