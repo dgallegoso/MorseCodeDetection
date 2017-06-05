@@ -4,7 +4,7 @@ import  blobDetection
 import motionTracking
 import translate
 
-cap = cv2.VideoCapture('data/flashlight.mp4')
+cap = cv2.VideoCapture('data/sos_light.mp4')
 
 blobs = []
 while(True):
