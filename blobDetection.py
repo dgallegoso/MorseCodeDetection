@@ -35,6 +35,11 @@ def findBlob(im):
 
     return keypoints
 
+
+def debugKeypointIm(im, keypoints):
+    im = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+
 def getKeypointIm(im, elements):
     for i, elem in enumerate(elements):
         if int(elem.signal[-1]) == 1 and (elem.plot or i == 0):

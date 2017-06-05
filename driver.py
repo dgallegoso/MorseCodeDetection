@@ -4,7 +4,7 @@ import  blobDetection
 import motionTracking
 import translate
 
-cap = cv2.VideoCapture('data/ford.mp4')
+cap = cv2.VideoCapture('data/flashlight.mp4')
 
 blobs = []
 while(True):
@@ -17,8 +17,10 @@ while(True):
     blobs = motionTracking.track(blobs, keypoints)
     blobs = motionTracking.prune_noise(blobs)
     blobDetection.getKeypointIm(im, blobs)
+    # blobDetection.debugKeypointIm(im, keypoints)
     # if len(blobs[0].signal)>10:
     #     print translate.decode(blobs[0].signal*2 - 1)
+    # print len(blobs)
 
     # Display the resulting frame
     cv2.imshow('frame',im)
