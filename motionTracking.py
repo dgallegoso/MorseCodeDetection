@@ -78,7 +78,7 @@ def eliminate_noise(elements, minLength, force):
     if len(averages) >= 10 or (force and len(averages) > 2):
         cuttoff = np.mean(KMeans(n_clusters=2).fit(averages.reshape(-1,1)).cluster_centers_)
         # print indexes[averages < cuttoff], cuttoff
-        for i in np.flip(indexes[averages < cuttoff], 0):
+        for i in np.flipud(indexes[averages < cuttoff]):
             del elements[i]
     return elements
 
@@ -105,7 +105,8 @@ def merge_similar(elements, minLength, force):
                     elem.signal[startx:] = (temp > 1).astype(int)
                     toDelete.append(j)
     for i in sorted(toDelete, reverse=True):
-        del elements[i]
+        if len(elements) > i:
+            del elements[i]
     return elements
 
 
