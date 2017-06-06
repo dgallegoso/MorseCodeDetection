@@ -3,7 +3,7 @@ import  blobDetection
 import motionTracking
 import translate
 
-cap = cv2.VideoCapture('data/sos_light.mp4')
+cap = cv2.VideoCapture('data/silvio.mov')
 
 blobs = []
 while(True):

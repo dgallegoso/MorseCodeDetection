@@ -19,15 +19,28 @@ for k, v in fake_dic.iteritems():
 	dic[v] = k
 
 SPACE = '0'
+WORDB = "-1"
 DOT = '1'
 DASH = '2'
 
 def morse_to_english(secrets, dic):
 	secrets = "".join([str(s) for s in secrets])
 	result = []
+	words = secrets.split(WORDB)
+	msg = ""
+	for word in words:
+		msg += translate_word(word, dic)
+		msg += " "
+	
+	return msg
+
+def translate_word(secrets, dic):
 	letters = secrets.split(SPACE)
-	result = [lookup("".join(l), dic) for l in letters]
-	return "".join(result)
+	word = ""
+	for letter in letters:
+		word += lookup(letter, dic)
+
+	return word
 	
 
 
