@@ -6,12 +6,7 @@ fake_dic = {'A': '.-',     'B': '-...',   'C': '-.-.',
         'P': '.--.',   'Q': '--.-',   'R': '.-.',
 		'S': '...',    'T': '-',      'U': '..-',
         'V': '...-',   'W': '.--',    'X': '-..-',
-        'Y': '-.--',   'Z': '--..',
-        
-        '0': '-----',  '1': '.----',  '2': '..---',
-        '3': '...--',  '4': '....-',  '5': '.....',
-        '6': '-....',  '7': '--...',  '8': '---..',
-        '9': '----.' 
+        'Y': '-.--',   'Z': '--..'
         }
 
 dic = {}
@@ -44,6 +39,14 @@ def translate_word(secrets, dic):
 	
 
 
+def guess(letter):
+	end = letter[-1:]
+	if end == DOT:
+		return letter[:-1]
+	else:
+		return "{0}{1}".format(letter[:-1], DOT)
+
+
 """check if sequence is a valid morse code letter
 letter is a string of {0, 1, 2}"""
 def lookup(letter, dic):
@@ -52,10 +55,8 @@ def lookup(letter, dic):
 	letter = letter.replace(DASH, "-")
 	if letter in dic:
 		return dic[letter]
-	elif letter[:-1] in dic:
-		return dic[letter[:-1]]
-	elif letter[1:] in dic:
-		return dic[letter[1:]]
+	elif guess(letter) in dic:
+		return dic[guess(letter)]
 	else:
 		print "Could not find {0}".format(letter)
 		return "$"
