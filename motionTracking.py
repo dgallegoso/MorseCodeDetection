@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.cluster import KMeans
 
+ELEMENT_NUM = 0
 MAX_MOVEMENT_RATIO = 1.5
 MAX_SIZE_RATIO = .5
 ALPHA = .3
@@ -12,6 +13,9 @@ class Element(object):
         self.rad = rad
         self.signal = np.append(np.zeros(n), 1).astype(int)
         self.plot = False
+        global ELEMENT_NUM
+        self.num = ELEMENT_NUM
+        ELEMENT_NUM = ELEMENT_NUM + 1
 
     def similarity(self, elem):
         multiplier = 1

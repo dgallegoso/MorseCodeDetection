@@ -7,8 +7,8 @@ import numpy as np;
 def findBlob(im):
     # Our operations on the frame come here
     im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    # cv2.imshow("rectangle", im)
-    # cv2.waitKey(0)
+    #cv2.imshow("rectangle", im)
+    #cv2.waitKey(0)
     im=cv2.GaussianBlur(im, (5, 5), 55)
     im=cv2.medianBlur(im, 5)
     # cv2.imshow("rectangle", im)
@@ -45,5 +45,8 @@ def getKeypointIm(im, elements):
         if int(elem.signal[-1]) == 1 and (elem.plot or i == 0):
             try:
                 cv2.circle(im, tuple(elem.coord.astype(int)), int(elem.rad), (0,0,255))
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                text = str(elem.num)
+                cv2.putText(im,text,tuple(elem.coord.astype(int)), font, 1,(0,0,255),2)
             except:
                 print "hiding exception"
