@@ -3,15 +3,18 @@ import  blobDetection
 import motionTracking
 import translate
 
-cap = cv2.VideoCapture('data/silvio.mov')
+cap = cv2.VideoCapture('data/notdark.mov')
 
 blobs = []
+count = 0
 while(True):
     # Capture frame-by-frame
     ret, im = cap.read()
 
     if not ret: break
-
+    if count % 50 == 0:
+        print "starting frame #{0}".format(count)
+    count += 1
     keypoints = blobDetection.findBlob(im)
     blobs = motionTracking.track(blobs, keypoints)
     blobs = motionTracking.prune_noise(blobs)
