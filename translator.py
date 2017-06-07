@@ -52,6 +52,10 @@ def lookup(letter, dic):
 	letter = letter.replace(DASH, "-")
 	if letter in dic:
 		return dic[letter]
+	elif letter[:-1] in dic:
+		return dic[letter[:-1]]
+	elif letter[1:] in dic:
+		return dic[letter[1:]]
 	else:
 		print "Could not find {0}".format(letter)
 		return "$"
