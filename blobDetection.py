@@ -43,4 +43,7 @@ def debugKeypointIm(im, keypoints):
 def getKeypointIm(im, elements):
     for i, elem in enumerate(elements):
         if int(elem.signal[-1]) == 1 and (elem.plot or i == 0):
-            cv2.circle(im, tuple(elem.coord.astype(int)), int(elem.rad), (0,0,255))
+            try:
+                cv2.circle(im, tuple(elem.coord.astype(int)), int(elem.rad), (0,0,255))
+            except:
+                print "hiding exception"
