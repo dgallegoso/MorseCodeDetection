@@ -36,7 +36,7 @@ class Element(object):
         self.rad = ALPHA * elem.rad + (1 - ALPHA) * self.rad
 
 
-def track(elements, keypoints):   
+def track(elements, keypoints):
     n = len(elements[0].signal) if len(elements) != 0 else 0
     sentinel = n > 256
     for keypoint in keypoints:
@@ -125,6 +125,7 @@ def merge_similar(elements, minLength, force):
 def prune_noise(elements, minLength=75, force=False):
     if len(elements) == 0:
         return elements
-    elements = merge_similar(elements, minLength, force)
+    if force:
+        elements = merge_similar(elements, minLength, force)
     elements = eliminate_noise(elements, minLength, force)
     return elements
