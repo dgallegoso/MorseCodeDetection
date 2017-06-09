@@ -5,7 +5,7 @@ import translate
 import numpy as np
 import matplotlib.pyplot as plt
 
-cap = cv2.VideoCapture('data/silvio.mov')
+cap = cv2.VideoCapture('data/turn_back.mov')
 
 blobs = []
 count = 0
