@@ -23,11 +23,10 @@ class Element(object):
         # acceptance region because the light might have moved. It might be better
         # to calculate some sort of velocity vector and create acceptance region
         # elongated in that direction.
-        if np.mean(self.signal[-OFF_LENGTH:]) <= .11:
-            multiplier = 1.5
+        multiplier += np.sqrt(len(self.signal) - np.max(np.where(self.signal == 1)) - 1)
 
         if np.linalg.norm(self.coord - elem.coord) / self.rad <= MAX_MOVEMENT_RATIO*multiplier:
-            if abs(self.rad - elem.rad) / self.rad <= MAX_SIZE_RATIO*multiplier:
+            if abs(self.rad - elem.rad) / self.rad <= MAX_SIZE_RATIO:
                 return 1
         return 0
 
