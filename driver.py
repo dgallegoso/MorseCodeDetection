@@ -61,6 +61,7 @@ for i in range(len(imgs)):
     ax = None
     if(last_ax != None):
         ax = fig.add_subplot(nrows, ncols, count)
+        ax.set_title(words[i])
     else:
         ax = fig.add_subplot(nrows, ncols, count, sharex=last_ax, sharey=last_ax)
         ax.set_title(words[i])
