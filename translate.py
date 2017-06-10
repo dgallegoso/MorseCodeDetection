@@ -7,7 +7,7 @@ import cvxpy as cvx
 from translator import morse_to_english, dic
 from sklearn.cluster import KMeans
 
-LAMBDA = .18
+LAMBDA = .1
 
 def plot_signal(nums, raw, smoothed):
     plt.subplot(211)
@@ -85,7 +85,7 @@ def parse(nums, word_breaks=False):
         else:
             new_intervals.append(2)
 
-    intervals = np.array(new_intervals)    
+    intervals = np.array(new_intervals)
 
     """np.place(intervals, intervals < mean_off_letters and intervals > mean_off_words, 0)
     intervals = intervals[intervals >= -1]

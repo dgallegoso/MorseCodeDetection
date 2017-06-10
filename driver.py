@@ -5,7 +5,7 @@ import translate
 import numpy as np
 import matplotlib.pyplot as plt
 
-cap = cv2.VideoCapture('data/turn_back.mov')
+cap = cv2.VideoCapture('data/ford.mp4.mov')
 
 blobs = []
 count = 0
@@ -56,7 +56,7 @@ count = 1
 last_ax = None;
 print words
 print index
-for i in range(len(imgs)): 
+for i in range(len(imgs)):
     img = imgs[i]
     ax = None
     if(last_ax != None):
